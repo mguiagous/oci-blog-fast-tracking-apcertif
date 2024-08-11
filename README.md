@@ -32,16 +32,16 @@ Before you begin, ensure you have the following prerequisites met:
 When you unzip the lab04-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
 
 terraform-ws/
-├── lab04-demo/
-│   ├── provider.auto.tfvars
-│   ├── input.auto.tfvars (alias terraform.tfvars)
-│   ├── network.tf
-│   ├── main.tf
-│   ├── variables.tf
-│   ├── output.tf
-│   ├── provider.tf
-│   ├── ping_script.sh
-│   └── resources_clean_up.sh
+  ├── lab04-demo/
+      ├── provider.auto.tfvars
+      ├── input.auto.tfvars (alias terraform.tfvars)
+      ├── network.tf
+      ├── main.tf
+      ├── variables.tf
+      ├── output.tf
+      ├── provider.tf
+      ├── ping_script.sh
+      └── resources_clean_up.sh
 
 ### provider.auto.tfvars 
 This file contains the configuration for the OCI Terraform provider, including authentication and connection details to OCI. Replace the string values within the `provider.auto.tfvars` with the values gathered from you tenancy.
