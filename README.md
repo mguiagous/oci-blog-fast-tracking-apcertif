@@ -44,7 +44,7 @@ terraform-ws/
       └── resources_clean_up.sh
 
 ### provider.auto.tfvars 
-This file contains the configuration for the OCI Terraform provider, including authentication and connection details to OCI. Replace the string values within the `provider.auto.tfvars` with the values gathered from you tenancy.
+This file contains the configuration for the OCI Terraform provider, including authentication and connection details to OCI. Replace the string values within the `provider.auto.tfvars` with the values gathered from your tenancy.
 ```
 tenancy       = "REPLACE_TENANCY_OCID_HERE" 
 user_id       = "REPLACE_USER_OCID_HERE"
@@ -69,19 +69,19 @@ compartment_id = "REPLACE_COMPARTMENT_OCID_HERE"
 
 How to find your VM image: https://docs.oracle.com/en-us/iaas/images/
 
-First determine the OCID of the compute image that will be used to create Compute Instances - You can also use the image of one of previous VMs created manually from the OCI console or search for an Oracle supported Image OCID based on the region identifier using OCI CLI.
+First, determine the OCID of the compute image that will be used to create Compute Instances - You can also use the image of one of the previous VMs created manually from the OCI console or search for an Oracle-supported Image OCID based on the region identifier using OCI CLI.
 
-Replace by the determined linux image (the lab recommend to use the amper images). When creating a compute Instance in a different region you will have to change the value of the OCID to match the image of the target region.
+Replace by the determined Linux image (the lab recommends to use the amper images). When creating a compute Instance in a different region you will have to change the value of the OCID to match the image of the target region.
   
 ```    
 amper_image_id = "REPLACE_REGIONAL_IMAGE_OCID_HERE"
 ```
 
 ### 3. Display Name Prefix
-All resource display names start with the Region abreviation ("PHX" for Phoenix or "IAD" for Ashburn) followed by "AP-LABX-Y". AP stand for `Architecture Professional`, X represent the `lab number` (01 for Lab 1) and Y represent the `lab sequence` (1 for 1st attempt, 2 for second attempt). 
+All resource display names start with the Region abbreviation ("PHX" for Phoenix or "IAD" for Ashburn) followed by "AP-LABX-Y". AP stands for `Architecture Professional`, X represents the `lab number` (01 for Lab 1) and Y represents the `lab sequence` (1 for 1st attempt, 2 for the second attempt). 
 
 The first network security group created for Lab 1 in Phoenix will have the following display name: *PHX-AP-LAB01-1-NSG-01*.  
- The index 1 in LAB01-1 represents the number of trial (1st trial) and the 01 after NSG indicates the first Network Security Group.
+ The index 1 in LAB01-1 represents the number of trials (1st trial) and the 01 after NSG indicates the first Network Security Group.
  The second Network Security Group of the third trial will have the following display name: *PHX-AP-LAB01-3-NSG-02*.
 ```
 display_name_prefix = "AP-LAB01-1"
@@ -115,7 +115,7 @@ In case you want to let Terraform create the VCN make sure to update the followi
   - Host name prefix
 
 #### Step 1b
-Provide the VCN & Subnet CIDR Blocks as well as hostname prefix to be used
+Provide the VCN & Subnet CIDR Blocks as well as the hostname prefix to be used
   
 ``` 
 create_vcn = true
@@ -124,7 +124,7 @@ vcn_cidr_block            = "10.0.0.0/16"
 public_subnet_cidr_block  = "10.0.0.0/24"
 private_subnet_cidr_block = "10.0.1.0/24"
 host_name_prefix          = "phxapl4"
-``` 
+```
 
 ### 5. SSH keys 
 Replace the ssh_keys with the Public and Private key paths pointing to the location of the generated SSH Keys.
@@ -151,6 +151,20 @@ create_vm_1_3 = false
 ```
 create_vm_4 = false
 ```
+#### Shape Definition
+shape_name  = "VM.Standard.A1.Flex"
+shape_memory_in_gbs = "6"
+shape_numberof_ocpus = "1"
+
+#### ICMP Ping from Local Computer
+icmp_pingvm1_fromlocal = false
+icmp_pingvm2_fromlocal = false
+icmp_pingvm3_fromlocal = false
+
+#### ICMP Ping of VM-04 from Each Public VM (VM-02, VM-02, and VM-03) via SSH
+icmp_test_from_vm1 = false
+icmp_test_from_vm2 = false
+icmp_test_from_vm3 = false
 
 #### Step 4: Add CIDR Ingress Rule and associate VM3 vNIC with NSG-01
 ```
@@ -159,9 +173,7 @@ automate_step_4 = false
 
 #### Step 5: Ping all the 3 public VMs From the Local Computer
 ```
-icmp_pingvm1_fromlocal = false
-icmp_pingvm2_fromlocal = false
-icmp_pingvm3_fromlocal = false
+SSH to the 3 public VMs (VM-01, VM-02, VM-03) and ping VM-04 (Attempt 1) # 
 ```
 #### Step 6: Add NSG1 Ingress Rule and associate VM4 vNIC with NSG-02
 ```
@@ -170,9 +182,7 @@ automate_step_6 = false
 
 #### Step 7: Ping VM-04 remotely from public VMs (VM01, VM02, VM03)
 ```
-icmp_test_from_vm1 = false
-icmp_test_from_vm2 = false
-icmp_test_from_vm3 = false
+SSH to the 3 public VMs (VM-01, VM-02, VM-03) and ping VM-04 (Attempt 2) #
 ```
 
 ### 7. Number of times ping is executed
