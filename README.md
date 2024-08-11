@@ -54,7 +54,7 @@ region        = "REPLACE_REGION_IDENTIFIER_HERE"
 ```
 
 ## input.auto.tfvars (alias terraform.tfvars)
-Modify the value of each variable listed below and provide your own entry before running terraform.
+Modify the value of each variable listed below and provide your entry before running Terraform.
 
 #### 1. Compartment 
 
@@ -86,12 +86,12 @@ The first network security group created for Lab 1 in Phoenix will have the foll
 ```
 display_name_prefix = "AP-LAB01-1"
 ```
-**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region abbreviation is computed from that map variable. However you need to populate the map by adding your OCI regions identifiers and mapped abbreviations.
+**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region abbreviation is computed from that map variable. However, you need to populate the map by adding your OCI region identifiers and mapped abbreviations.
 
 ### 4. Virtual Cloud Network (VCN) 
-There are two options to create the lab Virtual Cloud Network (VCN) to be used as the main resources under which all other resources will be created (VM, Subnets, NSG, etc.): 
+There are two options for creating the lab Virtual Cloud Network (VCN) to be used as the main resources under which all other resources will be created (VM, Subnets, NSG, etc.): 
 - From the console use VCN Wizard to create the VCN stack 
-- Using Terraform to create the VCN Stack from the scratch. 
+- Using Terraform to create the VCN Stack from scratch. 
 
 #### 4.1. Create VCN with OCI VCN Wizard 
 
@@ -106,8 +106,8 @@ public_subnet_id  = "REPLACE_PUBLIC_SUBNET_OCID_HERE"
 ```        
 
 #### 4.2. Create VCN with Terraform
-In case you want to let terraform create the VCN make sure to update the following: 
-- set `create_vcn` flag to `true`
+In case you want to let Terraform create the VCN make sure to update the following: 
+- set the `create_vcn` flag to `true`
 - provide the value of parameters needed to create your VCN:
   - VCN CIDR Block, 
   - Public Subnet CIDR Block, 
@@ -115,7 +115,7 @@ In case you want to let terraform create the VCN make sure to update the followi
   - Host name prefix
 
 #### Step 1b
-Provide the VCN & Subnet CIDR Blocks as well as host name prefix to be used
+Provide the VCN & Subnet CIDR Blocks as well as hostname prefix to be used
   
 ``` 
 create_vcn = true
@@ -134,7 +134,7 @@ ssh_private_key = "REPLACE_BY_SSH_PRIVATE_KEY_HERE"
 ```
 
 ### 6. Manual Execution vs Automation 
-The variables below are boolean flags used to chose when the OCI resources creation or the testing activities are done manually (default value is `false`) or automated using Terraform (`true`). 
+The variables below are boolean flags used to choose when the OCI resources creation or the testing activities are done manually (default value is `false`) or automated using Terraform (`true`). 
 
 #### Create 2 Empty Network Security Groups (NSG-1 and NSG-2).                
 ```
@@ -157,7 +157,7 @@ create_vm_4 = false
 automate_step_4 = false
 ```
 
-#### Step 5: Ping all the 3 public VMs From Local Computer
+#### Step 5: Ping all the 3 public VMs From the Local Computer
 ```
 icmp_pingvm1_fromlocal = false
 icmp_pingvm2_fromlocal = false
@@ -175,23 +175,23 @@ icmp_test_from_vm2 = false
 icmp_test_from_vm3 = false
 ```
 
-### 7. Number of time ping is executed
-This represents the number of time the ICMP Echo Ping will be executed (e.g., 3 or 5 pings) for basic testing purposes.
+### 7. Number of times ping is executed
+This represents the number of times the ICMP Echo Ping will be executed (e.g., 3 or 5 pings) for basic testing purposes.
 
 ```
 icmp_ping_count = "REPLACE_NUMBER_OF_PING_HERE"
 ```
 
 ## network.tf
-This code creates all networking resources including but not limited to: VCN, Internet Gateway, Route Tables, Network Security Groups and Security Lists, Public Subnets and Private Subnets.
+This code creates all networking resources including but not limited to VCN, Internet Gateway, Route Tables, Network Security Groups and Security Lists, Public Subnets, and Private Subnets.
 
 ## main.tf
-This is the main Terraform configuration file that specify the primary resource's definitions specially for the lab 4 - it launches three (3) VMs in public subnet and one (1) VM in the private subnet. It also orchestrates the access testing using provisioners to locally or remotely execute the ICMP Echo ping tests. This can be modified by a more sophisticated tool like ansible or shell scripts (see ping_scripts.sh).
+This is the main Terraform configuration file that specifies the primary resource's definitions, especially for lab 4 - it launches three (3) VMs in the public subnet and one (1) VM in the private subnet. It also orchestrates the access testing using provisioners to locally or remotely execute the ICMP Echo ping tests. This can be modified by a more sophisticated tool like Ansible or shell scripts (see ping_scripts.sh).
 
 ## variables.tf
-This file defines the input variables of the Terraform configurations witch values are specified in the `terraform.tfvars` file. It provides a way to parameterize the Terraform scripts. The majority of the parameters will be set as a single strings, boolean or number that used to create resources on OCI.
+This file defines the input variables of the Terraform configurations whose values are specified in the `terraform.tfvars` file. It provides a way to parameterize the Terraform scripts. The majority of the parameters will be set as single strings, boolean, or numbers that are used to create resources on OCI.
 
-A map variable that represents OCI regions is used to define Display Names prefix. Make sure to update this map with full list of OCI regions identifiers mapped to the 3 letters abreviation for each region.
+A map variable that represents OCI regions is used to define the Display Names prefix. Make sure to update this map with a full list of OCI region identifiers mapped to the 3 letter abbreviation for each region.
 
 **Note:** If you want to use Oracle Ressource Manager (ORM) you need to edit the `variables.tf` and provide default values to be considered.
 
@@ -199,10 +199,10 @@ A map variable that represents OCI regions is used to define Display Names prefi
 This file defines the output values of the Terraform configuration, which are useful for providing information about the created resources.
 
 ## ping_script.sh
-This is an utility shell script to run ping commands inside a loop based on the value of the number_of_ping provided.
+This is a utility shell script to run ping commands inside a loop based on the value of the number_of_ping provided.
 
 ## resources_clean_up.sh
-This second utility script allow to destroy all resources created during previous lab runs. This allows to free the OCI compute resources.
+This second utility script allows to destruction of all resources created during previous lab runs. This allows to free the OCI compute resources.
 
 # Deployment tips
 
@@ -210,7 +210,7 @@ This second utility script allow to destroy all resources created during previou
 
 * Modify all variable values, at least for testing purposes. Changes can be made once everything is working and you want to change associations 
   
-* At this stage we are only using Terraform Community version and Oracle equivalent of Terraform Enterprise for remote state management, especially in a collaborative environment (a.k.a: Oracle Resource Manager)
+* At this stage we are only using the Terraform Community version and Oracle equivalent of Terraform Enterprise for remote state management, especially in a collaborative environment (a.k.a: Oracle Resource Manager)
 
 * Check all changes are accurate before running the following terraform commands:
   
@@ -229,4 +229,4 @@ This second utility script allow to destroy all resources created during previou
   ```
 
 ## Contributing
-We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's fixing typos or adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
+We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's fixing typos adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
