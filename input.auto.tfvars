@@ -6,12 +6,12 @@
 ###################################################################################
 
 # Working Compartment 
-compartment_id = "ocid1.compartment.oc1..aaaaaaaa26avuyz4nakngq3gyvfi7sfxx2oa2rmi2gtshhjnimuqtin6dzwa"
+compartment_id = "REPLACE_WORKING_COMPARTMENT_OCID_HERE"
 
-# Image OCID - Link to find your image: https://docs.oracle.com/en-us/iaas/images/
-amper_image_id = "ocid1.image.oc1.phx.aaaaaaaa5a4rfsqnzcvoo72s7fegisywwrlfzkeav7vxjysowb7hlcviqxyq"
+# Image OCID - https://docs.oracle.com/en-us/iaas/images/
+amper_image_id = "REPLACE_INSTANCE_REGIONAL_IMAGE_OCID_HERE"
 
-# Region based display name prefix
+# Region-based display name prefix
 display_name_prefix = "AP-LAB01-1" # If you want a different Prefix replace it here
 
 ####################################################################################
@@ -20,12 +20,12 @@ display_name_prefix = "AP-LAB01-1" # If you want a different Prefix replace it h
 ####################################################################################
 create_vcn = false
 
-vcn_id            = "ocid1.vcn.oc1.phx.amaaaaaawe6j4fqa5c3bqmuneml3mrc6i4kstqgqgtvehxzja5dxx6p3dp3a"
-public_subnet_id  = "ocid1.subnet.oc1.phx.aaaaaaaa2iv5gjkfs4cwzlkov6n6zxu645h4zuq6wbv2uklj3xiz5nqmgwkq"
-private_subnet_id = "ocid1.subnet.oc1.phx.aaaaaaaaxlirofdbkilebvdwyjlcmgwo6nvwc3q6djeloqhtc34d2mkempza"
+vcn_id            = "REPLACE_VCN_OCID_HERE"
+private_subnet_id = "REPLACE_PRIVATE_SUBNET_OCID_HERE"
+public_subnet_id  = "REPLACE_PUBLIC_SUBNET_OCID_HERE"
 
 ####################################################################################
-# Step 1b - Terraform will create the VCN,subnets and all other network components.#
+# Step 1b - Terraform will create the VCN, subnets & all other network components. #
 ####################################################################################
 vcn_cidr_block            = "10.0.0.0/16"
 public_subnet_cidr_block  = "10.0.0.0/24"
@@ -48,7 +48,7 @@ create_vm_1_3 = true
 ####################################################################################
 create_vm_4 = true
 
-# Shape Defintion
+# Shape Definition
 shape_name  = "VM.Standard.A1.Flex"
 shape_memory_in_gbs = "6"
 shape_numberof_ocpus = "1"
@@ -59,8 +59,8 @@ icmp_pingvm2_fromlocal = false
 icmp_pingvm3_fromlocal = false
 
 # SSH keys https://docs.oracle.com/en/learn/generate_ssh_keys/index.html#introduction
-ssh_public_key  = "~/cloudshellkey.pub"
-ssh_private_key = "~/cloudshellkey"
+ssh_public_key  = "~/your-key.pub"
+ssh_private_key = "~/your-key"
 
 # ICMP Ping of VM-04 from Each Public VM (VM-02, VM-02, and VM-03) via SSH
 icmp_test_from_vm1 = false
@@ -85,14 +85,5 @@ automate_step_6 = false
 # Step 7: SSH to the 3 public VMs (VM-01, VM-02, VM-03) and ping VM-04 (Attempt 2) #
 ####################################################################################
 
-# Number of time ping is executed
+# Number of times ping is executed
 icmp_ping_count = 7 
-
-
-
-/*
-
-
-
-
-*/
