@@ -1,4 +1,4 @@
-## This Network configuration was infered from a ORM generated code by terraform-provider-oci
+## This Network configuration was inferred from an ORM generated code by terraform-provider-oci
 
 # Core VCN
 resource "oci_core_vcn" "this" {
@@ -86,8 +86,6 @@ resource "oci_core_network_security_group" "nsg-02" {
 }
 
 
-
-
 # Network Security Group Rule for NSG-1 or NSG-01 
 resource "oci_core_network_security_group_security_rule" "nsg-rule-1" {
   count       = (var.create_nsg_1 && var.automate_step_4) ? 1 : 0
@@ -118,7 +116,6 @@ resource "oci_core_network_security_group_security_rule" "nsg-rule-1" {
   stateless = false
 
 }
-
 
 
 # Network Security Group Rule for NSG-01
