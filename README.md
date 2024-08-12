@@ -1,6 +1,6 @@
 ## Introduction
 
-This guide complements the OCI blog tutorial "**Fast-Tracking OCI Architect Pro Certification with Terraform**" by providing step-by-step instructions for setting up your Terraform environment to execute the OCI Professional Certification Lab-04.
+This guide complements the OCI blog tutorial "**Fast-Tracking OCI Architect Pro Certification with Terraform**" by providing step-by-step instructions for setting up your Terraform environment to execute the OCI Professional Certification Lab 1.
 
 In the future, we'll streamline the setup process by providing pre-configured images allowing you to concentrate on mastering OCI Architect Professional concepts and efficiently managing your lab resources.
 
@@ -10,7 +10,7 @@ In the future, we'll streamline the setup process by providing pre-configured im
 Before you begin, ensure you have the following prerequisites met:
 
   * **Terraform v1.0.0 or greater**: Download and install it from the official website: <https://www.terraform.io/downloads.html/>
-  * **Information from your OCI account** (free accounts are not valid for the lab):
+  * **Information from your OCI account** (OCI free account only offers 2 VMs, thus not enough for the lab):
     - Tenancy OCID: How to get [Tenancy OCID](https://docs.oracle.com/en-us/iaas/Content/GSG/Tasks/contactingsupport_topic-Locating_Oracle_Cloud_Infrastructure_IDs.htm#Finding_Your_Tenancy_OCID_Oracle_Cloud_Identifier)
     - User OCID - How to get [User OCID](https://docs.oracle.com/en-us/iaas/Content/API/Concepts/apisigningkey.htm#five)
     - Deployment Region - Find region identifiers in the following resources: 
@@ -29,7 +29,7 @@ Before you begin, ensure you have the following prerequisites met:
           2. Public Key Path (~/.ssh/mykey.pub)
 
 ## File Structure
-When you unzip the lab04-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
+When you unzip the lab01-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
 
 terraform-ws/
   ├── lab04-demo/
@@ -60,7 +60,7 @@ Modify the value of each variable listed below and provide your entry before run
 
 How to get your [Compartment OCID](https://docs.oracle.com/en-us/iaas/Content/GSG/Tasks/contactingsupport_topic-Locating_Oracle_Cloud_Infrastructure_IDs.htm#Finding_the_OCID_of_a_Compartment) 
 
-Replace the string within `compartment_id` with the OCID of your working compartments (e.g.: OCIArchProCertif). 
+Replace the string within `compartment_id` with the OCID of your working compartment. 
 ```
 compartment_id = "REPLACE_COMPARTMENT_OCID_HERE" 
 ```
@@ -69,24 +69,23 @@ compartment_id = "REPLACE_COMPARTMENT_OCID_HERE"
 
 How to find your VM image: https://docs.oracle.com/en-us/iaas/images/
 
-First, determine the OCID of the compute image that will be used to create Compute Instances - You can also use the image of one of the previous VMs created manually from the OCI console or search for an Oracle-supported Image OCID based on the region identifier using OCI CLI.
+First, determine the OCID of the compute image that will be used to create Compute Instances - You can also use the image of one of the previous VMs created manually from the OCI console or use the OCI CLI to search for an Oracle-supported Image OCID based on the region identifier.
 
-Replace by the determined Linux image (the lab recommends to use the amper images). When creating a compute Instance in a different region you will have to change the value of the OCID to match the image of the target region.
+The lab documentation recommends using the amper Linux image. When creating a compute Instance in a different region you will have to change the value of the OCID to match the image of your target region. 
   
 ```    
 amper_image_id = "REPLACE_REGIONAL_IMAGE_OCID_HERE"
 ```
 
 ### 3. Display Name Prefix
-All resource display names start with the Region abbreviation ("PHX" for Phoenix or "IAD" for Ashburn) followed by "AP-LABX-Y". AP stands for `Architecture Professional`, X represents the `lab number` (01 for Lab 1) and Y represents the `lab sequence` (1 for 1st attempt, 2 for the second attempt). 
+All resource display names start with the Region 3 letters abbreviation ("PHX" for Phoenix or "IAD" for Ashburn) followed by "AP-LABX-Y". AP stands for `Architecture Professional`, X represents the `lab number` (01 for Lab 1) and Y represents the `lab sequence` (1 for 1st attempt, 2 for the second attempt). 
 
-The first network security group created for Lab 1 in Phoenix will have the following display name: *PHX-AP-LAB01-1-NSG-01*.  
- The index 1 in LAB01-1 represents the number of trials (1st trial) and the 01 after NSG indicates the first Network Security Group.
- The second Network Security Group of the third trial will have the following display name: *PHX-AP-LAB01-3-NSG-02*.
+The first network security group created for Lab 1 in Phoenix will have the following display name: *PHX-AP-LAB01-1-NSG-01*. The index 1 in LAB01-1 represents the number of trials (1st trial) and the 01 after NSG indicates the first Network Security Group. The second Network Security Group of the third trial will have the following display name: *PHX-AP-LAB01-3-NSG-02*.
+
 ```
 display_name_prefix = "AP-LAB01-1"
 ```
-**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region abbreviation is computed from that map variable. However, you need to populate the map by adding your OCI region identifiers and mapped abbreviations.
+**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region abbreviation is computed from that map variable. However, you need to populate the map by adding your region's identifier and mapped abbreviations.
 
 ### 4. Virtual Cloud Network (VCN) 
 There are two options for creating the lab Virtual Cloud Network (VCN) to be used as the main resources under which all other resources will be created (VM, Subnets, NSG, etc.): 
@@ -136,7 +135,7 @@ ssh_private_key = "REPLACE_BY_SSH_PRIVATE_KEY_HERE"
 ### 6. Manual Execution vs Automation 
 The variables below are boolean flags used to choose when the OCI resources creation or the testing activities are done manually (default value is `false`) or automated using Terraform (`true`). 
 
-#### Create 2 Empty Network Security Groups (NSG-1 and NSG-2).                
+#### Create 2 Empty Network Security Groups (NSG 1 and NSG 2).                
 ```
 create_nsg_1 = false
 create_nsg_2 = false
@@ -161,7 +160,7 @@ icmp_pingvm1_fromlocal = false
 icmp_pingvm2_fromlocal = false
 icmp_pingvm3_fromlocal = false
 
-#### ICMP Ping of VM-04 from Each Public VM (VM-02, VM-02, and VM-03) via SSH
+#### ICMP Ping of VM-04 from Each Public VM (VM-02, VM-02, and VM-03) via SSH - First Attempt
 icmp_test_from_vm1 = false
 icmp_test_from_vm2 = false
 icmp_test_from_vm3 = false
@@ -180,7 +179,7 @@ SSH to the 3 public VMs (VM-01, VM-02, VM-03) and ping VM-04 (Attempt 1) #
 automate_step_6 = false
 ```
 
-#### Step 7: Ping VM-04 remotely from public VMs (VM01, VM02, VM03)
+#### Step 7: Ping VM-04 remotely from public VMs (VM01, VM02, VM03) - Second Attempt
 ```
 SSH to the 3 public VMs (VM-01, VM-02, VM-03) and ping VM-04 (Attempt 2) #
 ```
@@ -196,7 +195,7 @@ icmp_ping_count = "REPLACE_NUMBER_OF_PING_HERE"
 This code creates all networking resources including but not limited to VCN, Internet Gateway, Route Tables, Network Security Groups and Security Lists, Public Subnets, and Private Subnets.
 
 ## main.tf
-This is the main Terraform configuration file that specifies the primary resource's definitions, especially for lab 4 - it launches three (3) VMs in the public subnet and one (1) VM in the private subnet. It also orchestrates the access testing using provisioners to locally or remotely execute the ICMP Echo ping tests. This can be modified by a more sophisticated tool like Ansible or shell scripts (see ping_scripts.sh).
+This is the main Terraform configuration file that specifies the primary resource's definitions, especially for lab 1 - it launches three (3) VMs in the public subnet and one (1) VM in the private subnet. It also orchestrates the access testing using provisioners to locally or remotely execute the ICMP Echo ping tests. This can be modified by a more sophisticated tool like Ansible or shell scripts (see ping_scripts.sh).
 
 ## variables.tf
 This file defines the input variables of the Terraform configurations whose values are specified in the `terraform.tfvars` file. It provides a way to parameterize the Terraform scripts. The majority of the parameters will be set as single strings, boolean, or numbers that are used to create resources on OCI.
@@ -239,4 +238,4 @@ This second utility script allows to destruction of all resources created during
   ```
 
 ## Contributing
-We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's fixing typos adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
+We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's fixing typos, adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
