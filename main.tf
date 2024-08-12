@@ -1,3 +1,5 @@
+# Latest Update: 08/12/2024.   Author: Mahamat Guiagoussou
+
 data "oci_identity_availability_domains" "ads" {
   compartment_id = var.tenancy_ocid
 }
@@ -205,10 +207,7 @@ resource "null_resource" "icmptest_ping_vm4_from_vm3" {
   provisioner "remote-exec" {
     inline = [
       "echo ",
-      "echo \"###############################################\"",
       "echo \" PINGING PRIVATE IP ${oci_core_instance.vm-4[0].private_ip}.\"",
-      "echo \"###############################################\"",
-      "echo",
       "echo",
       "ping ${oci_core_instance.vm-4[0].private_ip}"
     ]
