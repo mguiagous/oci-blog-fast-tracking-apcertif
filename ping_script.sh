@@ -1,5 +1,13 @@
 #!/bin/bash
 
+#!/bin/bash
+
+# This script performs ping checks to a specified IP address. It uses environment 
+# variables to allow customization of the target IP and number of ping attempts.
+# The script prints the results of each ping attempt and exits with a success/failure 
+# code based on the overall ping results.
+
+
 # Target IP address (use environment variable)
 TARGET_IP="${TARGET_IP:-}"
 
