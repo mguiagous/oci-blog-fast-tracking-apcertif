@@ -1,4 +1,4 @@
-## This Network configuration was inferred from an ORM generated code by terraform-provider-oci
+## This Network configuration is inspired by previous modules (official and non-official) used in other projects.
 
 # Core VCN
 resource "oci_core_vcn" "this" {
@@ -6,7 +6,6 @@ resource "oci_core_vcn" "this" {
 
   compartment_id = var.compartment_id
   cidr_block     = var.vcn_cidr_block
-  #display_name   = "${var.display_name_prefix}-TF-VCN-01"
   display_name = "${try(var.oci_regions[var.region], "OCI")}-${var.display_name_prefix}-TF-VCN-01"
   dns_label      = "${var.host_name_prefix}core"
 }
@@ -17,20 +16,18 @@ resource "oci_core_internet_gateway" "this" {
   count = (var.create_vcn) ? 1 : 0
 
   compartment_id = var.compartment_id
-  #display_name   = "${var.display_name_prefix}-TF-IGW-01"
-    display_name = "${try(var.oci_regions[var.region], "OCI")}-${var.display_name_prefix}-TF-IGW-01"
+  display_name = "${try(var.oci_regions[var.region], "OCI")}-${var.display_name_prefix}-TF-IGW-01"
   enabled        = "true"
   vcn_id         = oci_core_vcn.this.*.id[0]
 }
 
 
-# Default Routing Table
+# Extended Default Routing Table
 resource "oci_core_default_route_table" "this" {
   count = (var.create_vcn) ? 1 : 0
 
   compartment_id             = var.compartment_id
-  #display_name               = "${var.display_name_prefix}-TF-RoutingTable"
-     display_name = "${try(var.oci_regions[var.region], "OCI")}-${var.display_name_prefix}-TF-RoutingTable"
+  display_name = "${try(var.oci_regions[var.region], "OCI")}-${var.display_name_prefix}-TF-RoutingTable"
  
   manage_default_resource_id = oci_core_vcn.this.*.default_route_table_id[0]
   route_rules {
@@ -114,7 +111,6 @@ resource "oci_core_network_security_group_security_rule" "nsg-rule-1" {
 
   # Optional: Allow stateful connections (recommended for ICMP)
   stateless = false
-
 }
 
 
@@ -127,7 +123,6 @@ resource "oci_core_network_security_group_security_rule" "nsg-2-rule" {
   # Reference the Network Security Group where this rule applies
   network_security_group_id = var.create_vcn ? oci_core_network_security_group.nsg-2.*.id[0] :  oci_core_network_security_group.nsg-02.*.id[0]
 
-
   # ICMP protocol
   protocol = "1"
 
@@ -135,8 +130,6 @@ resource "oci_core_network_security_group_security_rule" "nsg-2-rule" {
   destination = ""
 
   source_type = "NETWORK_SECURITY_GROUP"
-  # Source is the internet (0.0.0.0/0)
-
   source = var.create_vcn ? oci_core_network_security_group.nsg-1.*.id[0] :  oci_core_network_security_group.nsg-01.*.id[0]
 
   # ICMP options for type 8 (Echo Request)
@@ -147,7 +140,6 @@ resource "oci_core_network_security_group_security_rule" "nsg-2-rule" {
 
   # Optional: Allow stateful connections (recommended for ICMP)
   stateless = false
-
 }
 
 
@@ -182,11 +174,11 @@ resource "oci_core_route_table" "Route-Table-for-My-Private-Subnet" {
   vcn_id         = oci_core_vcn.this.*.id[0]
 }
 
+
 # Regional Private Subnet
 resource "oci_core_subnet" "My-Private-Subnet" {
   count = (var.create_vcn) ? 1 : 0
 
-  #availability_domain = <<Optional value not found in discovery>>
   cidr_block                 = var.private_subnet_cidr_block
   compartment_id             = var.compartment_id
   dhcp_options_id            = oci_core_vcn.this.*.default_dhcp_options_id[0]
@@ -210,17 +202,12 @@ resource "oci_core_security_list" "Security-List-for-My-Private-Subnet" {
   compartment_id = var.compartment_id
   display_name   = "${var.display_name_prefix}-TF-Security-List-for-Private-Subnet"
   egress_security_rules {
-    #description = <<Optional value not found in discovery>>
     destination      = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
-    #icmp_options = <<Optional value not found in discovery>>
     protocol  = "all"
     stateless = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
     icmp_options {
       code = "4"
       type = "3"
@@ -229,12 +216,8 @@ resource "oci_core_security_list" "Security-List-for-My-Private-Subnet" {
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
     stateless   = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
-    #icmp_options = <<Optional value not found in discovery>>
     protocol    = "6"
     source      = "10.0.0.0/16"
     source_type = "CIDR_BLOCK"
@@ -242,12 +225,9 @@ resource "oci_core_security_list" "Security-List-for-My-Private-Subnet" {
     tcp_options {
       max = "22"
       min = "22"
-      #source_port_range = <<Optional value not found in discovery>>
     }
-    #udp_options = <<Optional value not found in discovery>>
   }
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
     icmp_options {
       code = "-1"
       type = "3"
@@ -256,8 +236,6 @@ resource "oci_core_security_list" "Security-List-for-My-Private-Subnet" {
     source      = "10.0.0.0/16"
     source_type = "CIDR_BLOCK"
     stateless   = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
   vcn_id = oci_core_vcn.this.*.id[0]
 }
@@ -275,14 +253,10 @@ resource "oci_core_default_security_list" "My-Default-Security-List" {
     description      = "Egress Open to all protocols"
     destination      = "0.0.0.0/0"
     destination_type = "CIDR_BLOCK"
-    #icmp_options = <<Optional value not found in discovery>>
     protocol  = "all"
     stateless = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
     icmp_options {
       code = "4"
       type = "3"
@@ -291,11 +265,8 @@ resource "oci_core_default_security_list" "My-Default-Security-List" {
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
     stateless   = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
     icmp_options {
       code = "-1"
       type = "3"
@@ -304,26 +275,9 @@ resource "oci_core_default_security_list" "My-Default-Security-List" {
     source      = "10.0.0.0/16"
     source_type = "CIDR_BLOCK"
     stateless   = "false"
-    #tcp_options = <<Optional value not found in discovery>>
-    #udp_options = <<Optional value not found in discovery>>
   }
-  /*ingress_security_rules {
-    description = "Openning Default Web Aplication Port 80 <Generated by Terraform>"
-    #icmp_options = <<Optional value not found in discovery>>
-    protocol    = "6"
-    source      = "0.0.0.0/0"
-    source_type = "CIDR_BLOCK"
-    stateless   = "false"
-    tcp_options {
-      max = "80"
-      min = "80"
-      #source_port_range = <<Optional value not found in discovery>>
-    }
-    #udp_options = <<Optional value not found in discovery>>
-  }*/
+
   ingress_security_rules {
-    #description = <<Optional value not found in discovery>>
-    #icmp_options = <<Optional value not found in discovery>>
     protocol    = "6"
     source      = "0.0.0.0/0"
     source_type = "CIDR_BLOCK"
@@ -332,7 +286,6 @@ resource "oci_core_default_security_list" "My-Default-Security-List" {
       max = "22"
       min = "22"
     }
-    #udp_options = <<Optional value not found in discovery>>
   }
   manage_default_resource_id = oci_core_vcn.this.*.default_security_list_id[0]
 }
@@ -342,7 +295,6 @@ resource "oci_core_default_security_list" "My-Default-Security-List" {
 resource "oci_core_subnet" "My-Public-Subnet" {
   count = (var.create_vcn) ? 1 : 0
 
-  #availability_domain = <<Optional value not found in discovery>>
   cidr_block                 = var.public_subnet_cidr_block
   compartment_id             = var.compartment_id
   dhcp_options_id            = oci_core_vcn.this.*.default_dhcp_options_id[0]
