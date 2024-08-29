@@ -5,6 +5,7 @@ variable "fingerprint" {}
 variable "private_key_path" {}
 variable "region" {}
 
+
 # Region Keys
 variable "oci_regions" {
   type = map(string)
@@ -19,24 +20,30 @@ variable "oci_regions" {
 # Compartment
 variable "compartment_id" {}
 
+
 # Server Linux Image ID
 variable "amper_image_id" {}
 
+
 variable "display_name_prefix" {}
+
 
 # Network (Step 1)
 variable "create_vcn" {}
+
 
 # Step 1(a) - VCN Created on OCI Console with VCN Wizard
 variable "vcn_id" {}
 variable "public_subnet_id" {}
 variable "private_subnet_id" {}
 
+
 # Step 1(b) - VCN automatically created for you by Terraform
 variable "vcn_cidr_block" {}
 variable "public_subnet_cidr_block" {}
 variable "private_subnet_cidr_block" {}
 variable "host_name_prefix" {}
+
 
 # Step 2 - Create 2 Network Security Groups
 variable "create_nsg_1" {}
@@ -54,6 +61,7 @@ variable "create_vm_4" {}
 variable "ssh_public_key" {}
 variable "ssh_private_key" {}
 
+
 # Shape Definition
 variable shape_name { 
    default = "VM.Standard.A1.Flex"
@@ -65,20 +73,23 @@ variable shape_numberof_ocpus {
      default = "1"
 }
 
+
 # Step 4: Additional Automation - Add Ingress Rules to NSG-01 and attach it to VM-03 vNIC
 variable "automate_step_4" {}
+
 
 # Step 5: ICMP Tests from local computer
 variable "icmp_pingvm1_fromlocal" {}
 variable "icmp_pingvm2_fromlocal" {}
 variable "icmp_pingvm3_fromlocal" {}
 
+
 # Step 6: Additional Automation - Add Ingress Rules to NSG-02 and attach it to VM-04 vNIC
 variable "automate_step_6" {}
+
 
 # Step 7 - Run ICMP Echo Ping Tests from each of the 3 VMs in the public subnet
 variable "icmp_test_from_vm1" {}
 variable "icmp_test_from_vm2" {}
 variable "icmp_test_from_vm3" {}
 variable "icmp_ping_count" {}
-
