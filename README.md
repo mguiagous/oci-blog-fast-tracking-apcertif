@@ -31,6 +31,7 @@ Before you begin, ensure you have the following prerequisites met:
 ## File Structure
 When you unzip the lab01-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
 
+```plaintext
 terraform-ws/
 ├── lab01-demo/
 │   ├── provider.auto.tfvars
@@ -42,6 +43,8 @@ terraform-ws/
 │   ├── provider.tf
 │   ├── ping_script.sh
 │   └── resources_clean_up.sh
+├── lab02-demo/  # Empty directory for the next lab
+```
 
 ### provider.auto.tfvars 
 This file contains the configuration for the OCI Terraform provider, including authentication and connection details to OCI. Replace the string values within the `provider.auto.tfvars` with the values gathered from your tenancy.
