@@ -1,11 +1,11 @@
-#. Provider              
+# Provider              
 variable "tenancy_ocid" {}
 variable "user_ocid" {}
 variable "fingerprint" {}
 variable "private_key_path" {}
 variable "region" {}
 
-
+# Region Keys
 variable "oci_regions" {
   type = map(string)
   default = {
@@ -27,38 +27,37 @@ variable "display_name_prefix" {}
 # Network (Step 1)
 variable "create_vcn" {}
 
-# Step 1(a) - You create the VCN wuing OCI Console)
+# Step 1(a) - VCN Created on OCI Console with VCN Wizard
 variable "vcn_id" {}
 variable "public_subnet_id" {}
 variable "private_subnet_id" {}
 
-# Step 1(b) - Terraform Create the VCN for you)
+# Step 1(b) - VCN automatically created for you by Terraform
 variable "vcn_cidr_block" {}
 variable "public_subnet_cidr_block" {}
 variable "private_subnet_cidr_block" {}
 variable "host_name_prefix" {}
 
-# Step 2 - Create 2 Network Security Groups)
+# Step 2 - Create 2 Network Security Groups
 variable "create_nsg_1" {}
 variable "create_nsg_2" {}
 
 
 # Step 3 VMs Creation
-# (Step 3(a)) - Create 3 VMs in the public submet
+# (Step 3(a)) - Create 3 VM instances in the public subnet
 variable "create_vm_1_3" {}
-# (Step 3(b)) - Create 1 VM in the private submet
+# (Step 3(b)) - Create 1 VM instance in the private subnet
 variable "create_vm_4" {}
 
 
-# SSH Keys
+# SSH Keys file paths
 variable "ssh_public_key" {}
 variable "ssh_private_key" {}
 
-# Shape Defintion
+# Shape Definition
 variable shape_name { 
    default = "VM.Standard.A1.Flex"
  }
-  
 variable shape_memory_in_gbs {
    default = "6"
 }
