@@ -2,7 +2,7 @@
 
 This guide complements the OCI blog tutorial "**Accelerate Oracle Cloud Infrastructure Architect Professional Certification with Terraform**" by providing step-by-step instructions for setting up your Terraform environment to execute the OCI Professional Certification Lab 1.
 
-In the future, we'll streamline the setup process by providing pre-configured images allowing you to concentrate on mastering OCI Architect Professional concepts and efficiently managing your lab resources.
+In the future, we'll streamline the setup process by providing a pre-configured image or a docker container allowing you to skip the environment setup and concentrate on mastering OCI Architect Professional concepts and efficiently managing your lab resources.
 
 
 ## Prerequisites
@@ -32,16 +32,16 @@ Before you begin, ensure you have the following prerequisites met:
 When you unzip the lab01-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
 
 terraform-ws/
-  ├── lab01-demo/
-      ├── provider.auto.tfvars
-      ├── input.auto.tfvars (alias terraform.tfvars)
-      ├── network.tf
-      ├── main.tf
-      ├── variables.tf
-      ├── output.tf
-      ├── provider.tf
-      ├── ping_script.sh
-      └── resources_clean_up.sh
+├── lab01-demo/
+│   ├── provider.auto.tfvars
+│   ├── input.auto.tfvars (alias terraform.tfvars)
+│   ├── network.tf
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── output.tf
+│   ├── provider.tf
+│   ├── ping_script.sh
+│   └── resources_clean_up.sh
 
 ### provider.auto.tfvars 
 This file contains the configuration for the OCI Terraform provider, including authentication and connection details to OCI. Replace the string values within the `provider.auto.tfvars` with the values gathered from your tenancy.
