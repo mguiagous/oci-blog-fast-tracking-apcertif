@@ -1,6 +1,6 @@
 ## Introduction
 
-This guide complements the OCI blog tutorial "**Fast-Tracking OCI Architect Pro Certification with Terraform**" by providing step-by-step instructions for setting up your Terraform environment to execute the OCI Professional Certification Lab 1.
+This guide complements the OCI blog tutorial "**Accelerate Oracle Cloud Infrastructure Architect Professional Certification with Terraform**" by providing step-by-step instructions for setting up your Terraform environment to execute the OCI Professional Certification Lab 1.
 
 In the future, we'll streamline the setup process by providing pre-configured images allowing you to concentrate on mastering OCI Architect Professional concepts and efficiently managing your lab resources.
 
@@ -32,7 +32,7 @@ Before you begin, ensure you have the following prerequisites met:
 When you unzip the lab01-demo.zip package into your working Terraform directory (e.g., terraform-ws), you'll have the following file structure:
 
 terraform-ws/
-  ├── lab04-demo/
+  ├── lab01-demo/
       ├── provider.auto.tfvars
       ├── input.auto.tfvars (alias terraform.tfvars)
       ├── network.tf
@@ -54,7 +54,7 @@ region        = "REPLACE_REGION_IDENTIFIER_HERE"
 ```
 
 ## input.auto.tfvars (alias terraform.tfvars)
-Modify the value of each variable listed below and provide your entry before running Terraform.
+You can modify the value of each variable listed below and give your entry before you run Terraform.
 
 #### 1. Compartment 
 
@@ -85,7 +85,7 @@ The first network security group created for Lab 1 in Phoenix will have the foll
 ```
 display_name_prefix = "AP-LAB01-1"
 ```
-**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region abbreviation is computed from that map variable. However, you need to populate the map by adding your region's identifier and mapped abbreviations.
+**Note:** The `oci_regions` map variable (see `variables.tf` below) is used to compute the 3 letters KEYs representing each OCI region (`IAD` for Ashburn, `PHX` for Phoenix, etc.). The region key is pulled from that map variable. However, it would help if you populated the map by adding your region's identifier and mapped keys.
 
 ### 4. Virtual Cloud Network (VCN) 
 There are two options for creating the lab Virtual Cloud Network (VCN) to be used as the main resources under which all other resources will be created (VM, Subnets, NSG, etc.): 
@@ -95,7 +95,7 @@ There are two options for creating the lab Virtual Cloud Network (VCN) to be use
 #### 4.1. Create VCN with OCI VCN Wizard 
 
 #### Step 1a
-For this make sure to turn the `create_vcn` flag off, and copy from the console the following data (VCN OCIDs, Public subnets OCIDs, and Private Subnet OCIDs).
+Make sure the `create_vcn` flag is off, and copy from the console the following data (VCN OCIDs, Public subnets OCIDs, and Private Subnet OCIDs).
 
 ```   
 create_vcn = false
@@ -238,4 +238,4 @@ This second utility script allows to destruction of all resources created during
   ```
 
 ## Contributing
-We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's fixing typos, adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
+We welcome any feedback and contributions from the readers to improve and expand this guide. Whether it's  adding clarity, or suggesting future extensions, your contributions are not only welcomed but highly valued.
