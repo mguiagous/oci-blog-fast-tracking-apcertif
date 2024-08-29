@@ -3,32 +3,34 @@ output "compartment_id" {
   value = var.compartment_id
 }
 
+
 # Instance Image OCID
 output "instance_image_id" {
   value = var.amper_image_id
 }
+
 
 # Display Name Prefix
 output "display_name_prefix" {
   value = var.display_name_prefix
 }
 
+# Networking: VCN, Public Subnet and Private Subnet
 # VCN OCID
 output "public_vcn_id" {
   value = var.vcn_id
 }
-
 # Public Subnet OCID
 output "public_subnet_id" {
   value = var.public_subnet_id
 }
-
 # Private Subnet OCID
 output "private_subnet_id" {
   value = var.private_subnet_id
 }
 
-# Public VM OCID, Display Name & Public IP
+
+# Public VM ID, Display Name & Public/Private IP
 output "_vm1-3_id" {
   value = oci_core_instance.VM1-3.*.id
 }
@@ -43,7 +45,7 @@ output "_vm1-3_private_ip" {
 }
 
 
-# Private VM OCID, Display Name & Public IP
+# Private VM ID, Display Name & Public IP
 output "_vm4_id" {
   value = oci_core_instance.vm-4.*.id
 }
